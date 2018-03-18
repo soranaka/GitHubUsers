@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/detail_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/avatar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/login_id_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:layout_marginStart="25dp"
+            android:text="@string/login_id_title"
+            android:textColor="@color/colorPrimary"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/avatar" />
+
+        <TextView
+            android:id="@+id/login_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:textColor="@color/colorPrimary"
+            android:visibility="invisible"
+            app:layout_constraintStart_toEndOf="@id/login_id_title"
+            app:layout_constraintTop_toTopOf="@id/login_id_title" />
+
+        <TextView
+            android:id="@+id/location_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:text="@string/location_title"
+            android:textColor="@color/colorPrimary"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="@id/login_id_title"
+            app:layout_constraintTop_toBottomOf="@id/login_id_title" />
+
+        <TextView
+            android:id="@+id/location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:textColor="@color/colorPrimary"
+            android:visibility="invisible"
+            app:layout_constraintStart_toEndOf="@id/location_title"
+            app:layout_constraintTop_toTopOf="@id/location_title" />
+
+        <TextView
+            android:id="@+id/email_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:text="@string/email_title"
+            android:textColor="@color/colorPrimary"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="@id/location_title"
+            app:layout_constraintTop_toBottomOf="@id/location_title" />
+
+        <TextView
+            android:id="@+id/email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:textColor="@color/colorPrimary"
+            android:visibility="invisible"
+            app:layout_constraintStart_toEndOf="@id/email_title"
+            app:layout_constraintTop_toTopOf="@id/email_title" />
+
+        <TextView
+            android:id="@+id/public_repos_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:text="@string/public_repos_title"
+            android:textColor="@color/colorPrimary"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="@id/email_title"
+            app:layout_constraintTop_toBottomOf="@id/email_title" />
+
+        <TextView
+            android:id="@+id/public_repos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:textColor="@color/colorPrimary"
+            android:visibility="invisible"
+            app:layout_constraintStart_toEndOf="@id/public_repos_title"
+            app:layout_constraintTop_toTopOf="@id/public_repos_title" />
+
+        <TextView
+            android:id="@+id/followers_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:text="@string/followers_title"
+            android:textColor="@color/colorPrimary"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="@id/public_repos_title"
+            app:layout_constraintTop_toBottomOf="@id/public_repos_title" />
+
+        <TextView
+            android:id="@+id/followers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:textColor="@color/colorPrimary"
+            android:visibility="invisible"
+            app:layout_constraintStart_toEndOf="@id/followers_title"
+            app:layout_constraintTop_toTopOf="@id/followers_title" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</ScrollView>

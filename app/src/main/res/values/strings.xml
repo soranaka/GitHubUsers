@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">GitHubUsers</string>
+    <string name="login_id_title">ID:</string>
+    <string name="location_title">location:</string>
+    <string name="email_title">email:</string>
+    <string name="public_repos_title">公開リポジトリ数:</string>
+    <string name="followers_title">フォロワー数:</string>
+</resources>
