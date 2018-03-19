@@ -15,7 +15,7 @@ interface UserListConstraint {
      */
     interface UserListView {
         fun initView()
-        fun addUsers(users: List<UserItem>)
+        fun updateUsers(users: List<UserItem>)
         fun showUserDetail(v: View, userItem: UserItem)
     }
 

@@ -65,10 +65,8 @@ class UserListActivity : AppCompatActivity(), UserListView {
 
     }
 
-    override fun addUsers(users: List<UserItem>) {
-        recycleViewAdapter.userItems = recycleViewAdapter.userItems.toMutableList().also {
-            it.addAll(users)
-        }
+    override fun updateUsers(users: List<UserItem>) {
+        recycleViewAdapter.userItems = users
     }
 
     override fun showUserDetail(v: View, userItem: UserItem) {

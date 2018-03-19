@@ -27,7 +27,7 @@ class UserListPresenter(private val userListView: UserListView,
         userListView.initView()
         val storedUsers = userListDataStore.getUserList()
         if (storedUsers != null) {
-            userListView.addUsers(storedUsers)
+            userListView.updateUsers(storedUsers)
         } else {
             loadUser("0")
         }
@@ -55,7 +55,7 @@ class UserListPresenter(private val userListView: UserListView,
                             ?: mutableListOf()
                     storedUsers.addAll(users)
                     userListDataStore.setUserList(storedUsers)
-                    userListView.addUsers(users)
+                    userListView.updateUsers(storedUsers)
                 },
                 onComplete = {
                     Log.i(TAG, "onComplete:$id")
