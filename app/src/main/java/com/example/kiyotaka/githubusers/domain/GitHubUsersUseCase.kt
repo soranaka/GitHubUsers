@@ -26,8 +26,6 @@ class GitHubUsersUseCase {
 
     fun users(since: String = "0"): Observable<List<UserItem>> {
         return retrofit.create(GitHubUserApi::class.java).users(since)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
                 .map { response ->
                     response.map { summary ->
                         UserItem(id = summary.id,
@@ -35,12 +33,12 @@ class GitHubUsersUseCase {
                                 avatarUrl = summary.avatarUrl)
                     }
                 }
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
     }
 
     fun user(loginId: String): Observable<User> {
         return retrofit.create(GitHubUserApi::class.java).user(loginId)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
                 .map { detail ->
                     User(loginId = detail.login,
                             avatarUrl = detail.avatarUrl,
@@ -49,5 +47,7 @@ class GitHubUsersUseCase {
                             publicRepos = detail.publicRepos,
                             followers = detail.followers)
                 }
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
     }
 }
