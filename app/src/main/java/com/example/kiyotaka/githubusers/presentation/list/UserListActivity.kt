@@ -11,10 +11,15 @@ import android.view.View
 import com.example.kiyotaka.githubusers.R
 import com.example.kiyotaka.githubusers.domain.model.UserItem
 import com.example.kiyotaka.githubusers.presentation.detail.UserDetailActivity
+import com.example.kiyotaka.githubusers.presentation.list.UserListConstraint.UserListView
 import kotlinx.android.synthetic.main.activity_user_list.*
 
 
 class UserListActivity : AppCompatActivity(), UserListView {
+
+    companion object {
+        private const val DATA_STORE_TAG = "data_store_tag"
+    }
 
     private lateinit var userListPresenter: UserListPresenter
     private lateinit var recycleViewAdapter: UserListRecycleViewAdapter
@@ -22,13 +27,24 @@ class UserListActivity : AppCompatActivity(), UserListView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_list)
-        userListPresenter = UserListPresenter(this)
+
+        val fm = supportFragmentManager
+        val dataStore = fm.findFragmentByTag(DATA_STORE_TAG) as? UserListDataStoreFragment
+                ?: UserListDataStoreFragment().also {
+                    fm.beginTransaction().add(it, DATA_STORE_TAG).commit()
+                }
+        userListPresenter = UserListPresenter(this, dataStore)
         recycleViewAdapter = UserListRecycleViewAdapter(View.OnClickListener { v ->
             val userItem = v.tag as? UserItem ?: return@OnClickListener
             userListPresenter.onClickUserItem(v, userItem)
         }).also { it.userItems = listOf() }
 
         userListPresenter.onCreate()
+    }
+
+    override fun onDestroy() {
+        userListPresenter.onDestroy()
+        super.onDestroy()
     }
 
     override fun initView() {

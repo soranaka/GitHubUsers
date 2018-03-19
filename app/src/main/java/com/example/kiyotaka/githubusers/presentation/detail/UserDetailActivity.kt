@@ -12,6 +12,7 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.example.kiyotaka.githubusers.R
 import com.example.kiyotaka.githubusers.domain.model.User
+import com.example.kiyotaka.githubusers.presentation.detail.UserDetailConstraint.UserDetailView
 import com.github.florent37.viewanimator.ViewAnimator
 import kotlinx.android.synthetic.main.activity_user_detail.*
 
@@ -23,6 +24,7 @@ class UserDetailActivity : AppCompatActivity(), UserDetailView {
 
     companion object {
         private const val TAG = "UserDetailActivity"
+        private const val DATA_STORE_TAG = "data_store_tag"
         const val USER_LOGIN_ID_KEY = "user_login_id_key"
         const val USER_AVATAR_URL_KEY = "user_avatar_url_key"
     }
@@ -34,7 +36,13 @@ class UserDetailActivity : AppCompatActivity(), UserDetailView {
         Log.i(TAG, "onCreate")
         setContentView(R.layout.activity_user_detail)
 
-        presenter = UserDetailPresenter(this)
+        val fm = supportFragmentManager
+        val dataStore = fm.findFragmentByTag(DATA_STORE_TAG) as? UserDetailDataStoreFragment
+                ?: UserDetailDataStoreFragment().also {
+                    fm.beginTransaction().add(it, DATA_STORE_TAG).commit()
+                }
+
+        presenter = UserDetailPresenter(this, dataStore)
 
         val loginId = intent?.getStringExtra(USER_LOGIN_ID_KEY)
         val avatarUrl = intent?.getStringExtra(USER_AVATAR_URL_KEY)
@@ -57,6 +65,11 @@ class UserDetailActivity : AppCompatActivity(), UserDetailView {
                 })
                 .into(avatar)
         presenter.onCreate(loginId!!)
+    }
+
+    override fun onDestroy() {
+        presenter.onDestroy()
+        super.onDestroy()
     }
 
     override fun initView() {
