@@ -4,7 +4,6 @@
     android:id="@+id/cuser_ard_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="10dp"
     app:cardUseCompatPadding="true"
     app:cardCornerRadius="5dp">
 
@@ -23,7 +22,7 @@
             android:id="@+id/login_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="8dp"
             android:textSize="26sp"
             android:textColor="@color/colorPrimary"
             app:layout_constraintTop_toTopOf="@id/avatar"

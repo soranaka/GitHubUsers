@@ -83,8 +83,10 @@ class UserListActivity : AppCompatActivity(), UserListView {
 
     class CustomItemDecoration : RecyclerView.ItemDecoration() {
         override fun getItemOffsets(outRect: Rect?, view: View?, parent: RecyclerView?, state: RecyclerView.State?) {
-            outRect?.top = 5
-            outRect?.bottom = 5
+            outRect?.left = 8
+            outRect?.top = 8
+            outRect?.right = 8
+            outRect?.bottom = 8
         }
     }
 }
