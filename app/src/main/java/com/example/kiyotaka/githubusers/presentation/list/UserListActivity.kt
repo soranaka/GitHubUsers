@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
+import android.widget.Toast
 import com.example.kiyotaka.githubusers.R
 import com.example.kiyotaka.githubusers.domain.model.UserItem
 import com.example.kiyotaka.githubusers.presentation.detail.UserDetailActivity
@@ -79,6 +80,10 @@ class UserListActivity : AppCompatActivity(), UserListView {
             it.putExtra(UserDetailActivity.USER_AVATAR_URL_KEY, userItem.avatarUrl)
         }
         startActivity(intent, bundle)
+    }
+
+    override fun showErrorMessage(messageResId: Int) {
+        Toast.makeText(this, getString(messageResId), Toast.LENGTH_LONG).show()
     }
 
     class CustomItemDecoration : RecyclerView.ItemDecoration() {

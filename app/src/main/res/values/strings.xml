@@ -5,4 +5,7 @@
     <string name="email_title">email:</string>
     <string name="public_repos_title">公開リポジトリ数:</string>
     <string name="followers_title">フォロワー数:</string>
+
+    <string name="error_message_forbidden">GitHubAPIの利用制限に到達しましたので、データを取得できません。</string>
+    <string name="error_message_unknown">予期しないエラーが発生したのでデータの取得ができませんでした。</string>
 </resources>

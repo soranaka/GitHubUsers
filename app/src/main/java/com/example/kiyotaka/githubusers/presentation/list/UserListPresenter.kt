@@ -6,6 +6,7 @@ import com.example.kiyotaka.githubusers.domain.GitHubUsersUseCase
 import com.example.kiyotaka.githubusers.domain.model.UserItem
 import com.example.kiyotaka.githubusers.presentation.list.UserListConstraint.UserListDataStore
 import com.example.kiyotaka.githubusers.presentation.list.UserListConstraint.UserListView
+import com.example.kiyotaka.githubusers.util.HttpErrorUtil
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
 
@@ -51,6 +52,7 @@ class UserListPresenter(private val userListView: UserListView,
     private fun loadUser(id: String) {
         disposable = useCase.users(id).subscribeBy(
                 onNext = { users ->
+                    Log.i(TAG, "onNext:$id")
                     val storedUsers = userListDataStore.getUserList()?.toMutableList()
                             ?: mutableListOf()
                     storedUsers.addAll(users)
@@ -59,6 +61,10 @@ class UserListPresenter(private val userListView: UserListView,
                 },
                 onComplete = {
                     Log.i(TAG, "onComplete:$id")
+                },
+                onError = { throwable ->
+                    Log.w(TAG, "onError:$id", throwable)
+                    userListView.showErrorMessage(HttpErrorUtil.convertErrorMessageRes(throwable))
                 })
     }
 }

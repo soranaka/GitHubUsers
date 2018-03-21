@@ -1,5 +1,6 @@
 package com.example.kiyotaka.githubusers.presentation.detail
 
+import android.support.annotation.StringRes
 import com.example.kiyotaka.githubusers.domain.model.User
 
 /**
@@ -15,6 +16,7 @@ interface UserDetailConstraint {
     interface UserDetailView {
         fun initView()
         fun showUser(user: User)
+        fun showErrorMessage(@StringRes messageResId: Int)
     }
 
     /**

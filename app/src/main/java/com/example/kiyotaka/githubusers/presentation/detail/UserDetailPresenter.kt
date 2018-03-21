@@ -1,8 +1,10 @@
 package com.example.kiyotaka.githubusers.presentation.detail
 
+import android.util.Log
 import com.example.kiyotaka.githubusers.domain.GitHubUsersUseCase
 import com.example.kiyotaka.githubusers.presentation.detail.UserDetailConstraint.UserDetailDataStore
 import com.example.kiyotaka.githubusers.presentation.detail.UserDetailConstraint.UserDetailView
+import com.example.kiyotaka.githubusers.util.HttpErrorUtil
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
 
@@ -26,6 +28,10 @@ class UserDetailPresenter(private val userDetailView: UserDetailView,
                 onNext = { user ->
                     UserDetailDataStore.setUser(user)
                     userDetailView.showUser(user)
+                },
+                onError = { throwable ->
+                    Log.i(TAG, "onError:$loginId", throwable)
+                    userDetailView.showErrorMessage(HttpErrorUtil.convertErrorMessageRes(throwable))
                 })
     }
 
