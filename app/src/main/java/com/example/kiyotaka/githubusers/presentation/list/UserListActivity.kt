@@ -40,7 +40,12 @@ class UserListActivity : AppCompatActivity(), UserListView {
             userListPresenter.onClickUserItem(v, userItem)
         }).also { it.userItems = listOf() }
 
-        userListPresenter.onCreate()
+        userListPresenter.onCreate(savedInstanceState)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+        userListPresenter.onSaveInstanceState(outState)
     }
 
     override fun onDestroy() {

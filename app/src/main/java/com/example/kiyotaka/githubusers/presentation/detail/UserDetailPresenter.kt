@@ -16,10 +16,16 @@ class UserDetailPresenter(private val userDetailView: UserDetailView,
                           private val UserDetailDataStore: UserDetailDataStore,
                           private val useCase: GitHubUsersUseCase = GitHubUsersUseCase()) {
 
+    companion object {
+        private const val TAG = "UserDetailPresenter"
+    }
+
     private var disposable: Disposable? = null
 
     fun onCreate(loginId: String) {
-        val storedUser = UserDetailDataStore.getUser()
+        val storedUser = UserDetailDataStore.getUser()?.also {
+            Log.i(TAG, "restore from storedUsers")
+        }
         if (storedUser != null) {
             userDetailView.showUser(storedUser)
             return
