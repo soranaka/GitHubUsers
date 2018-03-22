@@ -93,10 +93,20 @@ class UserListActivity : AppCompatActivity(), UserListView {
 
     class CustomItemDecoration : RecyclerView.ItemDecoration() {
         override fun getItemOffsets(outRect: Rect?, view: View?, parent: RecyclerView?, state: RecyclerView.State?) {
-            outRect?.left = 8
-            outRect?.top = 8
-            outRect?.right = 8
-            outRect?.bottom = 8
+            view ?: return
+            parent ?: return
+            val userCardSpace = view.context.resources.getDimensionPixelSize(R.dimen.user_card_space)
+            val position = parent.getChildAdapterPosition(view)
+
+            outRect?.also {
+                // 先頭だけtopマージンを設定する
+                if (position == 0) {
+                    it.top = userCardSpace
+                }
+                it.left = userCardSpace
+                it.right = userCardSpace
+                it.bottom = userCardSpace
+            }
         }
     }
 }
