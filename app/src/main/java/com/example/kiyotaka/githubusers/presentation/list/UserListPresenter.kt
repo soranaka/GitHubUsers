@@ -11,7 +11,7 @@ import com.example.kiyotaka.githubusers.util.HttpErrorUtil
 import com.squareup.moshi.KotlinJsonAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
-import io.reactivex.disposables.Disposable
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
 
 /**
@@ -29,7 +29,7 @@ class UserListPresenter(private val userListView: UserListView,
                 .adapter<List<UserItem>>(Types.newParameterizedType(List::class.java, UserItem::class.java))
     }
 
-    private var disposable: Disposable? = null
+    private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
     fun onCreate(savedInstanceState: Bundle?) {
         Log.i(TAG, "onCreate")
@@ -58,10 +58,7 @@ class UserListPresenter(private val userListView: UserListView,
     }
 
     fun onDestroy() {
-        disposable?.let {
-            if (!it.isDisposed) it.dispose()
-        }
-        disposable = null
+        compositeDisposable.clear()
     }
 
     fun onSaveInstanceState(outState: Bundle?) {
@@ -71,7 +68,7 @@ class UserListPresenter(private val userListView: UserListView,
     }
 
     private fun loadUser(id: String) {
-        disposable = useCase.users(id).subscribeBy(
+        compositeDisposable.add(useCase.users(id).subscribeBy(
                 onNext = { users ->
                     Log.i(TAG, "onNext:$id")
                     val storedUsers = userListDataStore.getUserList()?.toMutableList()
@@ -86,6 +83,6 @@ class UserListPresenter(private val userListView: UserListView,
                 onError = { throwable ->
                     Log.w(TAG, "onError:$id", throwable)
                     userListView.showErrorMessage(HttpErrorUtil.convertErrorMessageRes(throwable))
-                })
+                }))
     }
 }

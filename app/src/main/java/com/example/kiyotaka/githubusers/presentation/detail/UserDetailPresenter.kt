@@ -5,7 +5,7 @@ import com.example.kiyotaka.githubusers.domain.GitHubUsersUseCase
 import com.example.kiyotaka.githubusers.presentation.detail.UserDetailConstraint.UserDetailDataStore
 import com.example.kiyotaka.githubusers.presentation.detail.UserDetailConstraint.UserDetailView
 import com.example.kiyotaka.githubusers.util.HttpErrorUtil
-import io.reactivex.disposables.Disposable
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
 
 /**
@@ -20,7 +20,7 @@ class UserDetailPresenter(private val userDetailView: UserDetailView,
         private const val TAG = "UserDetailPresenter"
     }
 
-    private var disposable: Disposable? = null
+    private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
     fun onCreate(loginId: String) {
         val storedUser = UserDetailDataStore.getUser()?.also {
@@ -30,7 +30,7 @@ class UserDetailPresenter(private val userDetailView: UserDetailView,
             userDetailView.showUser(storedUser)
             return
         }
-        disposable = useCase.user(loginId).subscribeBy(
+        compositeDisposable.add(useCase.user(loginId).subscribeBy(
                 onNext = { user ->
                     UserDetailDataStore.setUser(user)
                     userDetailView.showUser(user)
@@ -38,13 +38,10 @@ class UserDetailPresenter(private val userDetailView: UserDetailView,
                 onError = { throwable ->
                     Log.i(TAG, "onError:$loginId", throwable)
                     userDetailView.showErrorMessage(HttpErrorUtil.convertErrorMessageRes(throwable))
-                })
+                }))
     }
 
     fun onDestroy() {
-        disposable?.let {
-            if (!it.isDisposed) it.dispose()
-        }
-        disposable = null
+        compositeDisposable.clear()
     }
 }
