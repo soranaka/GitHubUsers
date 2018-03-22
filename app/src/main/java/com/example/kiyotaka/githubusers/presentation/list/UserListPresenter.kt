@@ -1,6 +1,5 @@
 package com.example.kiyotaka.githubusers.presentation.list
 
-import android.os.Bundle
 import android.util.Log
 import android.view.View
 import com.example.kiyotaka.githubusers.domain.GitHubUsersUseCase
@@ -8,9 +7,6 @@ import com.example.kiyotaka.githubusers.domain.model.UserItem
 import com.example.kiyotaka.githubusers.presentation.list.UserListConstraint.UserListDataStore
 import com.example.kiyotaka.githubusers.presentation.list.UserListConstraint.UserListView
 import com.example.kiyotaka.githubusers.util.HttpErrorUtil
-import com.squareup.moshi.KotlinJsonAdapterFactory
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.Types
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
 
@@ -24,23 +20,15 @@ class UserListPresenter(private val userListView: UserListView,
 
     companion object {
         private const val TAG = "UserListPresenter"
-        private const val SAVE_DATA_KEY = "save_data_key"
-        private val ADAPTER = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
-                .adapter<List<UserItem>>(Types.newParameterizedType(List::class.java, UserItem::class.java))
     }
 
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
-    fun onCreate(savedInstanceState: Bundle?) {
+    fun onCreate() {
         Log.i(TAG, "onCreate")
         userListView.initView()
         val storedUsers = userListDataStore.getUserList()?.also {
             Log.i(TAG, "restore from storedUsers")
-        } ?: savedInstanceState?.getString(SAVE_DATA_KEY)?.let { json ->
-            ADAPTER.fromJson(json)
-        }?.also {
-            Log.i(TAG, "restore from savedInstanceState")
-            userListDataStore.setUserList(it)
         }
         if (storedUsers != null) {
             userListView.updateUsers(storedUsers)
@@ -59,12 +47,6 @@ class UserListPresenter(private val userListView: UserListView,
 
     fun onDestroy() {
         compositeDisposable.clear()
-    }
-
-    fun onSaveInstanceState(outState: Bundle?) {
-        val storedUsers = userListDataStore.getUserList() ?: return
-        val json = ADAPTER.toJson(storedUsers)
-        outState?.putString(SAVE_DATA_KEY, json)
     }
 
     private fun loadUser(id: String) {
