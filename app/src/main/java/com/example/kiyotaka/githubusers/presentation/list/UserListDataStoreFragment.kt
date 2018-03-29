@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment
 import android.util.Log
 import com.example.kiyotaka.githubusers.domain.model.UserItem
 import com.example.kiyotaka.githubusers.presentation.list.UserListConstraint.UserListDataStore
-import com.squareup.moshi.KotlinJsonAdapterFactory
+import com.example.kiyotaka.githubusers.util.ApplicationJsonAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 
@@ -17,7 +17,7 @@ class UserListDataStoreFragment : Fragment(), UserListDataStore {
     companion object {
         private const val TAG = "UserListDataStore"
         private const val SAVE_DATA_KEY = "save_data_key"
-        private val ADAPTER = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
+        private val ADAPTER = Moshi.Builder().add(ApplicationJsonAdapterFactory.INSTANCE).build()
                 .adapter<List<UserItem>>(Types.newParameterizedType(List::class.java, UserItem::class.java))
     }
 

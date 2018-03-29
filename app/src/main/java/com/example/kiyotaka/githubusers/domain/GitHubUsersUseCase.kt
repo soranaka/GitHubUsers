@@ -3,7 +3,7 @@ package com.example.kiyotaka.githubusers.domain
 import com.example.kiyotaka.githubusers.api.GitHubUserApi
 import com.example.kiyotaka.githubusers.domain.model.User
 import com.example.kiyotaka.githubusers.domain.model.UserItem
-import com.squareup.moshi.KotlinJsonAdapterFactory
+import com.example.kiyotaka.githubusers.util.ApplicationJsonAdapterFactory
 import com.squareup.moshi.Moshi
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -20,7 +20,7 @@ class GitHubUsersUseCase {
     private val retrofit = Retrofit.Builder()
             .baseUrl("https://api.github.com")
             .addConverterFactory(MoshiConverterFactory.create(
-                    Moshi.Builder().add(KotlinJsonAdapterFactory()).build()))
+                    Moshi.Builder().add(ApplicationJsonAdapterFactory.INSTANCE).build()))
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
 
